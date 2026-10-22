@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HPAS Target Portal - Himachal Pradesh Administrative Services</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header Section -->
+    <header class="bg-indigo-900 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold tracking-tight">HPAS Mission Control</h1>
+                <p class="text-indigo-200 text-sm mt-1">Himachal Pradesh Administrative Services Exam Preparation Portal</p>
+            </div>
+            <!-- Countdown Box -->
+            <div class="mt-4 md:mt-0 bg-indigo-800 border border-indigo-700 px-4 py-2 rounded-lg text-center shadow-inner">
+                <span class="block text-xs text-indigo-300 uppercase tracking-wider font-semibold">Estimated Exam Countdown</span>
+                <span id="countdown-timer" class="text-xl font-mono font-bold text-amber-300">Loading...</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8 flex-grow w-full">
+
+        <!-- Left & Middle Columns: Syllabus Tracker & Answer Writing -->
+        <div class="lg:col-span-2 space-y-8">
+            
+            <!-- Daily Answer Writing Prompt Card -->
+            <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                        Daily Mains Answer Writing Prompt
+                    </h2>
+                    <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-full font-medium">GS Paper-III / HP Special</span>
+                </div>
+                <p class="text-slate-700 font-medium bg-slate-50 p-4 rounded-lg border border-slate-100 text-sm leading-relaxed">
+                    "Discuss the economic viability and ecological challenges associated with tapping the hydro-potential in Himachal Pradesh. Suggest measures for sustainable harnessing of river basins." <span class="text-xs text-slate-400 block mt-2">(250 Words | 10 Marks)</span>
+                </p>
+                <div class="mt-4">
+                    <textarea id="answer-draft" rows="4" class="w-full p-3 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Draft your answer points or structure here... (Auto-saves locally)"></textarea>
+                    <div class="flex justify-between items-center mt-2">
+                        <span id="save-status" class="text-xs text-slate-400">Structure: Introduction -> Hydro status -> Ecological concerns -> Way forward.</span>
+                        <button onclick="saveDraft()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer">Save Draft</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Syllabus Master Checklist -->
+            <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold text-slate-900">HPAS Core Syllabus Progress Tracker</h2>
+                    <span id="progress-counter" class="text-xs font-semibold bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-full">0% Completed</span>
+                </div>
+                <div class="space-y-4">
+                    <!-- Category 1 -->
+                    <div class="border border-slate-100 p-4 rounded-lg bg-slate-50/50">
+                        <h3 class="font-semibold text-slate-800 text-sm mb-2">Himachal Pradesh GK (History, Geography, Culture & Economy)</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="syllabus-checkbox rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4" data-id="hp-1"> Ancient & Medieval Hill States (Kangra, Kullu, Chamba)</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="syllabus-checkbox rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4" data-id="hp-2"> Gorkha Invasion & British Colonial History</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="syllabus-checkbox rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4" data-id="hp-3"> Praja Mandal Movements & Integration</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="syllabus-checkbox rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4" data-id="hp-4"> Geography: Drainage, Climate & Zones</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="syllabus-checkbox rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4" data-id="hp-5"> Art, Architecture (Temples/Monasteries) & Tribes</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="syllabus-checkbox rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4" data-id="hp-6"> HP Economy, Horticulture & Hydro Potential</label>
+                        </div>
+                    </div>
+                    <!-- Category 2 -->
+                    <div class="border border-slate-100 p-4 rounded-lg bg-slate-50/50">
+                        <h3 class="font-semibold text-slate-800 text-sm mb-2">General Studies (Prelims & Mains Core)</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="syllabus-checkbox rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4" data-id="gs-1"> Indian Polity, Constitution & Panchayati Raj</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="syllabus-checkbox rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4" data-id="gs-2"> Modern Indian History & Indian National Movement</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="syllabus-checkbox rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4" data-id="gs-3"> Indian & World Geography</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="syllabus-checkbox rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4" data-id="gs-4"> Indian Economy & Five Year Plans</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="syllabus-checkbox rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4" data-id="gs-5"> Environment, Ecology & Climate Change</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="syllabus-checkbox rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4" data-id="gs-6"> Science, Tech & Disaster Management</label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Right Column: Study Tools & Quick Links -->
+        <div class="space-y-8">
+            
+            <!-- Pomodoro Study Timer -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 text-center">
+                <h2 class="text-base font-bold text-slate-900 mb-2">Aspirant Focus Timer</h2>
+                <p class="text-xs text-slate-500 mb-4">Maintain high-yield deep work cycles.</p>
+                <div id="timer-display" class="text-4xl font-mono font-bold text-indigo-600 mb-4">25:00</div>
+                <div class="flex justify-center gap-2">
+                    <button id="timer-toggle" onclick="toggleTimer()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer">Start</button>
+                    <button onclick="resetTimer()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer">Reset</button>
+                </div>
+            </div>
+
+            <!-- Quick HPAS Resources & Strategy -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h2 class="text-base font-bold text-slate-900 mb-4">Essential Strategy Matrix</h2>
+                <ul class="space-y-3 text-sm text-slate-600">
+                    <li class="flex items-start gap-2">
+                        <span class="text-indigo-600 font-bold">•</span>
+                        <span><strong>Prelims Focus:</strong> Focus heavily on Statement-based questions and Himachal GK static data (Districts, Rivers, Valleys).</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-indigo-600 font-bold">•</span>
+                        <span><strong>Mains Strategy:</strong> Practice answer structuring with distinct Sub-headings matching HPPSC syllabus sub-units.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-indigo-600 font-bold">•</span>
+                        <span><strong>CSAT Paper II:</strong> Treat qualifying paper (Paper-II) with regular practice in comprehension & logical reasoning.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-6">
+                <h3 class="text-sm font-bold text-indigo-900 mb-2">Official Portals</h3>
+                <p class="text-xs text-indigo-700 mb-4">Keep track of direct official notifications and updates.</p>
+                <div class="flex flex-col gap-2">
+                    <a href="http://hppsc.hp.gov.in" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-indigo-700 hover:text-indigo-900 bg-white p-2.5 rounded border border-indigo-200 text-center shadow-xs transition-colors">HPPSC Official Website ↗</a>
+                    <a href="https://himachal.nic.in" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-indigo-700 hover:text-indigo-900 bg-white p-2.5 rounded border border-indigo-200 text-center shadow-xs transition-colors">Government of HP Portal ↗</a>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
+        <p>HPAS Preparation Workspace — Built for focused administrative service aspirants.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
