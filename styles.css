@@ -3,6 +3,6 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-input[type="checkbox"] {
+input[type="checkbox"], input[type="radio"] {
     accent-color: #4f46e5;
 }
